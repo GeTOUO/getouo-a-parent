@@ -1,0 +1,48 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+#    org.springframework.boot.autoconfigure: DEBUG
+
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          messaging-client-oidc-d2:
+            provider: spring
+            client-id: messaging-client-d2
+            client-secret: secret2
+            authorization-grant-type: authorization_code
+#            redirect-uri: "http://localhost:8081/"
+            redirect-uri: "http://192.168.11.104:8081/login/oauth2/code/{registrationId}"
+            scope: openid, profile
+            client-name: messaging-client-oidc-d2
+          messaging-client-authorization-code:
+            provider: spring
+            client-id: messaging-client-d2
+            client-secret: secret2
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://192.168.11.104:8081/authorized"
+            scope: message.read,message.write
+            client-name: messaging-client-authorization-code
+#          messaging-client-client-credentials:
+#            provider: spring
+#            client-id: messaging-client
+#            client-secret: secret
+#            authorization-grant-type: client_credentials
+#            scope: message.read,message.write
+#            client-name: messaging-client-client-credentials
+        provider:
+          spring:
+            issuer-uri: http://192.168.11.104:9000
+
+#messages:
+#  base-uri: http://127.0.0.1:8090/messages
