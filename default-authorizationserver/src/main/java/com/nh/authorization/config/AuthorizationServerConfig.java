@@ -98,14 +98,14 @@ public class AuthorizationServerConfig {
 		RegisteredClient registeredClient = createClient(
 				"messaging-client", "secret",
 				Set.of("message.read", "message.write"),
-				"http://192.168.11.104:8080/login/oauth2/code/messaging-client-oidc",
+				"http://192.168.11.100:8080/login/oauth2/code/messaging-client-oidc",
 				"http://192.168.11.104:8080/authorized");
 
 		RegisteredClient registeredClient2 = createClient(
 				"messaging-client-d2", "secret2",
 				null,
-				"http://192.168.11.104:8081/login/oauth2/code/messaging-client-oidc-d2",
-				"http://192.168.11.104:8081/index");
+				"http://192.168.11.100:8081/login/oauth2/code/messaging-client-oidc-d2",
+				"http://192.168.11.100:8081/index");
 
 
 		// Save registered client in db as if in-memory
