@@ -15,6 +15,7 @@
  */
 package com.nh.authorization.config;
 
+import com.nh.authorization.jose.Jwks;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -47,7 +48,6 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import com.nh.authorization.jose.Jwks;
 
 import java.util.Set;
 import java.util.UUID;
@@ -69,7 +69,14 @@ public class AuthorizationServerConfig {
 		// @formatter:off
 		http
 			.exceptionHandling(exceptions ->
-				exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+					{
+						// LoginUrlAuthenticationEntryPoint point = new LoginUrlAuthenticationEntryPoint("/login");
+						LoginUrlAuthenticationEntryPoint point =
+								new LoginUrlAuthenticationEntryPoint("/login");
+						// point.setUseForward(false);
+						point.setForceHttps(true);
+						exceptions.authenticationEntryPoint(point);
+					}
 			)
 			.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 		// @formatter:on
